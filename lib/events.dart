@@ -1,5 +1,7 @@
 import 'package:bekart/customs/customevents.dart';
 import 'package:bekart/home.dart';
+import 'package:bekart/sshop/addpage.dart';
+import 'package:bekart/viewexam.dart';
 import 'package:flutter/material.dart';
 
 class Events extends StatefulWidget {
@@ -41,31 +43,51 @@ class _EventsState extends State<Events> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-                'The most beautiful things are note assosiated with money they are memories and moments....'),
-            SizedBox(
-              height: 30,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 1.6,
-              child: ListView.separated(
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return Customevents(
-                      decorName: products[index]['decor'],
-                      decorEvens: products[index]['shop'],
-                      productimg: products[index]['img'],
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: 20,
-                      ),
-                  itemCount: products.length),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                  'The most beautiful things are note assosiated with money they are memories and moments....'),
+              SizedBox(
+                height: 30,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 1.6,
+                child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      return Customevents(
+                        decorName: products[index]['decor'],
+                        decorEvens: products[index]['shop'],
+                        productimg: products[index]['img'],
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 20,
+                        ),
+                    itemCount: products.length),
+              ),
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DataProductFirebase(),
+                        ));
+                      },
+                      icon: Icon(Icons.remove_red_eye)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Addpage(),
+                        ));
+                      },
+                      icon: Icon(Icons.upload)),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

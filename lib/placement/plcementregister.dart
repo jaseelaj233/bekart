@@ -1,34 +1,32 @@
 import 'dart:developer';
 
-import 'package:bekart/model/shopmodal.dart';
-import 'package:bekart/sshop/shophome.dart';
+import 'package:bekart/placement/Placementhome.dart';
+import 'package:bekart/placement/placementmodal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Shopregister extends StatefulWidget {
-  const Shopregister({super.key});
+class Placementregi extends StatefulWidget {
+  const Placementregi({super.key});
 
   @override
-  State<Shopregister> createState() => _ShopregisterState();
+  State<Placementregi> createState() => _PlacementregiState();
 }
 
-class _ShopregisterState extends State<Shopregister> {
+class _PlacementregiState extends State<Placementregi> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController detailsController = TextEditingController();
 
-  TextEditingController shopnamecontroller = TextEditingController();
-  TextEditingController licencecontrooler = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
 
-  TextEditingController ownercontroller = TextEditingController();
-  TextEditingController phonenumbercontroller = TextEditingController();
+  TextEditingController addresscontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 191, 154, 94),
+      backgroundColor: Color.fromRGBO(0, 0, 0, 1),
       body: Padding(
         padding: const EdgeInsets.all(50.0),
         child: Form(
@@ -39,7 +37,10 @@ class _ShopregisterState extends State<Shopregister> {
                 Center(
                   child: Text(
                     'Hello!',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        color: Colors.white),
                   ),
                 ),
                 SizedBox(
@@ -48,23 +49,23 @@ class _ShopregisterState extends State<Shopregister> {
                 Center(
                   child: Text(
                     'REGISTER NOW',
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "shopnameis  required";
+                      return "nameis  required";
                     } else {
                       return null;
                     }
                   },
-                  controller: shopnamecontroller,
+                  controller: namecontroller,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'shopName',
+                    hintText: 'Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -75,56 +76,16 @@ class _ShopregisterState extends State<Shopregister> {
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "ownername is  required";
+                      return "address is  required";
                     } else {
                       return null;
                     }
                   },
-                  controller: ownercontroller,
+                  controller: addresscontroller,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'ownername',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30.0),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "details is  required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: detailsController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'details',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30.0),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "licence is  required";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: licencecontrooler,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'licence pic',
+                    hintText: 'address',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -140,7 +101,7 @@ class _ShopregisterState extends State<Shopregister> {
                       return null;
                     }
                   },
-                  controller: phonenumbercontroller,
+                  controller: phonecontroller,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -208,13 +169,10 @@ class _ShopregisterState extends State<Shopregister> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               try {
-                                Shopmodal shop1 = Shopmodal(
-                                    name: shopnamecontroller.text,
-                                    ownwnername: ownercontroller.text,
-                                    details: detailsController.text,
-                                    licencepic: licencecontrooler.text,
-                                    phone:
-                                        int.parse(phonenumbercontroller.text),
+                                Placementmodal placementmodal1 = Placementmodal(
+                                    name: namecontroller.text,
+                                    address: addresscontroller.text,
+                                    phone: int.parse(phonecontroller.text),
                                     email: emailController.text,
                                     Password: passwordController.text);
                                 FirebaseAuth.instance
@@ -224,19 +182,19 @@ class _ShopregisterState extends State<Shopregister> {
                                     .then((value) {
                                   String id = value.user!.uid;
                                   FirebaseFirestore.instance
-                                      .collection("shops")
+                                      .collection("placement")
                                       .doc(id)
-                                      .set(shop1.toJson())
+                                      .set(placementmodal1.toJson())
                                       .then((onValue) => Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                            builder: (context) => Shophome(),
+                                            builder: (context) =>
+                                                Placementhome(),
                                           )));
                                 });
                               } on FirebaseAuthException catch (e) {
                                 log("Error is on $e");
                               }
                             }
-                            //
                           },
                           child: Text('Register'),
                           style: ButtonStyle(

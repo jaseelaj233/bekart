@@ -1,9 +1,8 @@
-import 'dart:ui_web';
-
 import 'package:bekart/addtocart.dart';
 import 'package:bekart/customs/customhome.dart';
 import 'package:bekart/events.dart';
 import 'package:bekart/favouirt.dart';
+import 'package:bekart/finalpages/homefinal.dart';
 import 'package:bekart/j.dart';
 import 'package:bekart/productdetals.dart';
 import 'package:bekart/shop.dart';
@@ -21,7 +20,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selecteditem = 0;
   List<Widget> bottomnav = [
-    const Userhomedetails(),
+    const Finalhome(),
     const Favouirt(),
     const Addtocart(),
     Events(),

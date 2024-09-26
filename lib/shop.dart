@@ -81,7 +81,7 @@ class _PlanetcafeState extends State<Planetcafe> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 1.6,
+              height: MediaQuery.of(context).size.height / 1.4,
               child: ListView.separated(
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {

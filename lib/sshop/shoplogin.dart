@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:bekart/sshop/shophome.dart';
+import 'package:bekart/sshop/shopregister.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Shopl extends StatefulWidget {
@@ -111,10 +116,24 @@ class _ShoplState extends State<Shopl> {
                           width: 150,
                           child: ElevatedButton(
                               onPressed: () {
-                                if (formkey.currentState!.validate()) ;
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => Home(),
-                                // ));
+                                if (formkey.currentState!.validate()) {
+                                  try {
+                                    FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email.text,
+                                            password: password.text)
+                                        .then((onvalue) {
+                                      log(FirebaseAuth
+                                          .instance.currentUser!.uid);
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Shophome(),
+                                      ));
+                                    });
+                                  } on FirebaseAuthException catch (e) {
+                                    log('error is on $e');
+                                  }
+                                }
                               },
                               child: Text('Login'),
                               style: ButtonStyle(
@@ -143,9 +162,9 @@ class _ShoplState extends State<Shopl> {
                           width: 150,
                           child: TextButton(
                               onPressed: () {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => (),
-                                // ));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Shopregister(),
+                                ));
                               },
                               child: Text('signup'),
                               style: ButtonStyle(

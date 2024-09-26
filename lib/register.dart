@@ -1,4 +1,11 @@
+import 'dart:developer';
+
 import 'package:bekart/home.dart';
+import 'package:bekart/login.dart';
+import 'package:bekart/model/usermodel.dart';
+import 'package:bekart/userhomedetails.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -15,7 +22,7 @@ class _RegisterState extends State<Register> {
   TextEditingController namecontroller = TextEditingController();
 
   TextEditingController addresscontroller = TextEditingController();
-  TextEditingController phonenumbercontroller = TextEditingController();
+  TextEditingController phonecontroller = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   @override
@@ -93,7 +100,7 @@ class _RegisterState extends State<Register> {
                       return null;
                     }
                   },
-                  controller: phonenumbercontroller,
+                  controller: phonecontroller,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -159,10 +166,34 @@ class _RegisterState extends State<Register> {
                       width: 150,
                       child: ElevatedButton(
                           onPressed: () {
-                            if (formKey.currentState!.validate()) ;
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Home(),
-                            ));
+                            if (formKey.currentState!.validate()) {
+                              try {
+                                UsersModel user1 = UsersModel(
+                                    name: namecontroller.text,
+                                    address: addresscontroller.text,
+                                    phone: int.parse(phonecontroller.text),
+                                    email: emailController.text,
+                                    Password: passwordController.text);
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: emailController.text,
+                                        password: passwordController.text)
+                                    .then((value) {
+                                  String id = value.user!.uid;
+                                  FirebaseFirestore.instance
+                                      .collection("Users") 
+                                      .doc(id)
+                                      .set(user1.toJson())
+                                      .then((onValue) => Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                Home(),
+                                          )));
+                                });
+                              } on FirebaseAuthException catch (e) {
+                                log("Error is on $e");
+                              }
+                            }
                           },
                           child: Text('Register'),
                           style: ButtonStyle(

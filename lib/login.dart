@@ -1,5 +1,10 @@
+// import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+import 'dart:developer';
+
 import 'package:bekart/home.dart';
 import 'package:bekart/register.dart';
+import 'package:bekart/userhomedetails.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -10,8 +15,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController email =
+      TextEditingController(text: "jaseelaj233@gmail.com");
+  TextEditingController password = TextEditingController(text: "123456");
 
   final formkey = GlobalKey<FormState>();
   @override
@@ -72,8 +78,14 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       controller: email,
                       validator: (value) {
+                        RegExp reg = RegExp(
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
                         if (value == null || value.isEmpty) {
-                          return "email is required";
+                          return "email required";
+                        } else if (!reg.hasMatch(value)) {
+                          return "Enter a valid email";
+                        } else {
+                          return null;
                         }
                       },
                       decoration: InputDecoration(
@@ -90,8 +102,12 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       controller: password,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'password is requred';
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 6) {
+                          return "password is atleast  6 characters or numbers";
+                        } else {
+                          return null;
                         }
                       },
                       decoration: InputDecoration(
@@ -114,10 +130,24 @@ class _LoginState extends State<Login> {
                           width: 150,
                           child: ElevatedButton(
                               onPressed: () {
-                                if (formkey.currentState!.validate()) ;
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ));
+                                if (formkey.currentState!.validate()) {
+                                  try {
+                                    FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email.text,
+                                            password: password.text)
+                                        .then((onvalue) {
+                                      log(FirebaseAuth
+                                          .instance.currentUser!.uid);
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Home(),
+                                      ));
+                                    });
+                                  } on FirebaseAuthException catch (e) {
+                                    log('error is on $e');
+                                  }
+                                }
                               },
                               child: Text('Login'),
                               style: ButtonStyle(

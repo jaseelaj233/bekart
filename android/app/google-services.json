@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "572646008850",
+    "project_id": "bekart-35dcf",
+    "storage_bucket": "bekart-35dcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572646008850:android:613ae3c481a7df5d84d0cb",
+        "android_client_info": {
+          "package_name": "com.example.bekart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1a1w6ETw-rILcF9IVk8diX7cZApz_n4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

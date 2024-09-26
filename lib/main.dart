@@ -13,6 +13,8 @@ import 'package:bekart/deliveryboys/pickuporder.dart';
 import 'package:bekart/events.dart';
 import 'package:bekart/examp.dart';
 import 'package:bekart/favouirt.dart';
+import 'package:bekart/finalpages/homefinal.dart';
+import 'package:bekart/firebase_options.dart';
 import 'package:bekart/home.dart';
 import 'package:bekart/j.dart';
 import 'package:bekart/login.dart';
@@ -22,19 +24,27 @@ import 'package:bekart/ob3.dart';
 import 'package:bekart/ooo.dart';
 
 import 'package:bekart/orderss.dart';
+import 'package:bekart/placement/Placementhome.dart';
+import 'package:bekart/placement/loginplace.dart';
 import 'package:bekart/profile.dart';
 import 'package:bekart/rateus.dart';
 import 'package:bekart/register.dart';
 import 'package:bekart/shop.dart';
 import 'package:bekart/sshop/adddeliveryboys.dart';
+import 'package:bekart/sshop/addpage.dart';
 import 'package:bekart/sshop/addproduct.dart';
 import 'package:bekart/sshop/assignwork.dart';
 import 'package:bekart/sshop/shophome.dart';
 import 'package:bekart/sshop/shoplogin.dart';
 import 'package:bekart/userhomedetails.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -66,7 +76,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Deliveryhome(),
+      home: Finalhome(),
     );
   }
 }

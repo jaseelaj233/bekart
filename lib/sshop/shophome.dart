@@ -18,8 +18,8 @@ class _ShophomeState extends State<Shophome> {
   List<String> buttons = [
     'Add shop products',
     'add delivery boys',
-    'view orders'
-        'Add events',
+    'view orders',
+    'Add events',
     'view shop rating',
   ];
   List<Widget> routes = [

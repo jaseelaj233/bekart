@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:bekart/admin/adminhome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Adminlogin extends StatefulWidget {
@@ -113,10 +117,25 @@ class _AdminloginState extends State<Adminlogin> {
                           width: 150,
                           child: ElevatedButton(
                               onPressed: () {
-                                if (formkey.currentState!.validate()) ;
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //   builder: (context) => Home(),
-                                // ));
+                                if (formkey.currentState!.validate()) {
+                                  try {
+                                    FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: email.text,
+                                            password: password.text)
+                                        .then((onvalue) {
+                                      log(FirebaseAuth
+                                          .instance.currentUser!.uid);
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Adminhome(),
+                                      ));
+                                    });
+                                  } on FirebaseAuthException catch (e) {
+                                    log('error is on $e');
+                                  }
+                                }
+                                //
                               },
                               child: Text('Login'),
                               style: ButtonStyle(
