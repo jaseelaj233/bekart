@@ -1,8 +1,10 @@
 import 'package:bekart/addtocart.dart';
+
 import 'package:bekart/customs/customhome.dart';
 import 'package:bekart/events.dart';
 import 'package:bekart/favouirt.dart';
-import 'package:bekart/finalpages/homefinal.dart';
+
+import 'package:bekart/finalpages/homefinal1.dart';
 import 'package:bekart/j.dart';
 import 'package:bekart/productdetals.dart';
 import 'package:bekart/shop.dart';
@@ -20,10 +22,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selecteditem = 0;
   List<Widget> bottomnav = [
-    const Finalhome(),
+    const Finalhome1(),
     const Favouirt(),
     const Addtocart(),
     Events(),
+    Jprofile(),
   ];
   void onitemtapped(int index) {
     setState(() {
@@ -56,7 +59,9 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.shopping_cart),
           ),
           const BottomNavigationBarItem(
-              tooltip: 'events', label: '', icon: Icon(Icons.event_seat))
+              tooltip: 'events', label: '', icon: Icon(Icons.event_seat)),
+          const BottomNavigationBarItem(
+              tooltip: 'accounds', label: '', icon: Icon(Icons.person))
         ],
         onTap: onitemtapped,
         currentIndex: selecteditem,

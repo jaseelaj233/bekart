@@ -14,6 +14,7 @@ import 'package:bekart/events.dart';
 import 'package:bekart/examp.dart';
 import 'package:bekart/favouirt.dart';
 import 'package:bekart/finalpages/homefinal.dart';
+import 'package:bekart/finalpages/homefinal1.dart';
 import 'package:bekart/firebase_options.dart';
 import 'package:bekart/home.dart';
 import 'package:bekart/j.dart';
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Finalhome(),
+      home: Home(),
     );
   }
 }

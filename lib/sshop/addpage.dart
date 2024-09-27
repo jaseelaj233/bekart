@@ -23,6 +23,7 @@ class _AddpageState extends State<Addpage> {
 
   TextEditingController detailscontroller = TextEditingController();
   TextEditingController quantycontroller = TextEditingController();
+  TextEditingController ratingcontroller = TextEditingController();
   // String category = "";
   String imageURL = '';
   bool isUploading = false;
@@ -43,7 +44,8 @@ class _AddpageState extends State<Addpage> {
         details: detailscontroller.text,
         quantity: quantycontroller.text,
         shopname: shopcontroler.text,
-        productimage: imageURL);
+        productimage: imageURL,
+        rating: ratingcontroller.text);
 
     try {
       await productcollection.doc(uniqueid).set(shopaddmodal1.toJson());
@@ -54,6 +56,7 @@ class _AddpageState extends State<Addpage> {
       quantycontroller.clear();
       detailscontroller.clear();
       shopcontroler.clear();
+      ratingcontroller.clear();
       setState(() {
         imageURL = '';
       });
@@ -170,6 +173,26 @@ class _AddpageState extends State<Addpage> {
                   filled: true,
                   fillColor: Colors.white,
                   hintText: 'quantity',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return " plz enter rating";
+                  } else {
+                    return null;
+                  }
+                },
+                controller: ratingcontroller,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'rating',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,

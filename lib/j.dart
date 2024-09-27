@@ -2,6 +2,8 @@ import 'package:bekart/customs/custombutton.dart';
 import 'package:bekart/home.dart';
 import 'package:bekart/orderss.dart';
 import 'package:bekart/profile.dart';
+import 'package:bekart/sshop/addpage.dart';
+import 'package:bekart/viewexam.dart';
 import 'package:flutter/material.dart';
 
 class Jprofile extends StatefulWidget {
@@ -67,52 +69,30 @@ class _JprofileState extends State<Jprofile> {
           SizedBox(
             height: 10,
           ),
-          Text('would you like to this play store'),
-          Text('your feedback help us make your experiejce better'),
-          SizedBox(),
-          SizedBox(
-            height: 30,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return IconButton(
-                      onPressed: () {}, icon: Icon(Icons.star_border_outlined));
-                },
-                separatorBuilder: (context, index) => SizedBox(
-                      width: 10,
-                    ),
-                itemCount: 5),
-          ),
           SizedBox(
             height: 50,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromARGB(255, 144, 142, 139),
-              hintText: 'write somthing......',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(13),
-                borderSide: BorderSide.none,
-              ),
-            ),
           ),
           SizedBox(
             height: 20,
           ),
-          Container(
-            height: 50,
-            width: 150,
-            child: TextButton(
-                onPressed: () {},
-                child: Text('Add feedback'),
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Colors.black,
-                  ),
-                  foregroundColor: WidgetStatePropertyAll(Colors.white),
-                )),
-          ),
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DataProductFirebase(),
+                    ));
+                  },
+                  icon: Icon(Icons.remove_red_eye)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Addpage(),
+                    ));
+                  },
+                  icon: Icon(Icons.upload)),
+            ],
+          )
         ]),
       ),
     );
