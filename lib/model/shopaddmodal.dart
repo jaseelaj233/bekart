@@ -1,47 +1,47 @@
 class Shopaddmodal {
   final String productname;
   final String price;
+  final String details;
   final String quantity;
   final String shopname;
-  final String rating;
-  final String category;
-
-  final details;
   final String productimage;
+  final String category;
+  final String rating;
 
   Shopaddmodal({
     required this.productname,
     required this.price,
     required this.details,
     required this.quantity,
-    required this.productimage,
     required this.shopname,
-    required this.rating,
+    required this.productimage,
     required this.category,
+    required this.rating,
   });
+
   factory Shopaddmodal.fromJson(Map<String, dynamic> json) {
     return Shopaddmodal(
-        productname: json['productname'],
-        price: json['price'],
-        details: json['details'],
-        quantity: json['quantity'],
-        productimage: json['productimgae'],
-        shopname: json['shopname'],
-        rating: json['rating'],
-        category: json['category']);
+      productname: json['productname'] ?? '',
+      price: json['price'] ?? '',
+      details: json['details'] ?? '',
+      quantity: json['quantity'] ?? '',
+      shopname: json['shopname'] ?? '',
+      productimage: json['productimage'] ?? '',
+      category: json['category'] ?? '',
+      rating: json['rating'] ?? '',
+    );
   }
 
-  get docs => null;
   Map<String, dynamic> toJson() {
     return {
       'productname': productname,
       'price': price,
       'details': details,
       'quantity': quantity,
-      'productimage': productimage,
       'shopname': shopname,
-      'rating': rating,
+      'productimage': productimage,
       'category': category,
+      'rating': rating,
     };
   }
 }

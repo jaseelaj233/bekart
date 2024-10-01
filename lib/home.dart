@@ -12,6 +12,9 @@ import 'package:bekart/userhomedetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '1_cafeView/cartProviderModel/producCartUsingProvider.dart';
+import '1_cafeView/homepageinal2.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -22,9 +25,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selecteditem = 0;
   List<Widget> bottomnav = [
-    const Finalhome1(),
+    const homepage2(),
     const Favouirt(),
-    const Addtocart(),
+     CartScreenProvider(),
     Events(),
     Jprofile(),
   ];

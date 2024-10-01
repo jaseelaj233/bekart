@@ -90,8 +90,10 @@ class _AddpageState extends State<Addpage> {
                     'kr backery',
                     'nila backes'
                   ]
-                      .map(
-                          (category) => DropdownMenuItem(child: Text(category)))
+                      .map((category) =>
+                          DropdownMenuItem(
+                              value: category,
+                              child: Text(category)))
                       .toList(),
                   onChanged: (value) {
                     setState(() {
