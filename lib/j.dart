@@ -3,6 +3,7 @@ import 'package:bekart/home.dart';
 import 'package:bekart/orderss.dart';
 import 'package:bekart/profile.dart';
 import 'package:bekart/sshop/addpage.dart';
+import 'package:bekart/sshop/addproduct.dart';
 import 'package:bekart/viewexam.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +88,7 @@ class _JprofileState extends State<Jprofile> {
               IconButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Addpage(),
+                      builder: (context) => Addproduct(),
                     ));
                   },
                   icon: Icon(Icons.upload)),

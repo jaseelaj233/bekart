@@ -24,7 +24,8 @@ class _AddpageState extends State<Addpage> {
   TextEditingController detailscontroller = TextEditingController();
   TextEditingController quantycontroller = TextEditingController();
   TextEditingController ratingcontroller = TextEditingController();
-  // String category = "";
+
+  String _category = "";
   String imageURL = '';
   bool isUploading = false;
   final formkey = GlobalKey<FormState>();
@@ -45,6 +46,7 @@ class _AddpageState extends State<Addpage> {
         quantity: quantycontroller.text,
         shopname: shopcontroler.text,
         productimage: imageURL,
+        category: _category,
         rating: ratingcontroller.text);
 
     try {
@@ -59,6 +61,7 @@ class _AddpageState extends State<Addpage> {
       ratingcontroller.clear();
       setState(() {
         imageURL = '';
+        _category = '';
       });
     } catch (e) {
       ScaffoldMessenger.of(context)
@@ -78,6 +81,30 @@ class _AddpageState extends State<Addpage> {
           key: formkey,
           child: Column(
             children: [
+              DropdownButtonFormField(
+                  value: _category.isNotEmpty ? _category : null,
+                  items: [
+                    'planet cafe',
+                    'cakeland',
+                    'bake o clock',
+                    'kr backery',
+                    'nila backes'
+                  ]
+                      .map(
+                          (category) => DropdownMenuItem(child: Text(category)))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _category = value ?? '';
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "plz select a category";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(hintText: 'category')),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {

@@ -4,6 +4,7 @@ class Shopaddmodal {
   final String quantity;
   final String shopname;
   final String rating;
+  final String category;
 
   final details;
   final String productimage;
@@ -16,6 +17,7 @@ class Shopaddmodal {
     required this.productimage,
     required this.shopname,
     required this.rating,
+    required this.category,
   });
   factory Shopaddmodal.fromJson(Map<String, dynamic> json) {
     return Shopaddmodal(
@@ -25,7 +27,8 @@ class Shopaddmodal {
         quantity: json['quantity'],
         productimage: json['productimgae'],
         shopname: json['shopname'],
-        rating: json['rating']);
+        rating: json['rating'],
+        category: json['category']);
   }
 
   get docs => null;
@@ -38,6 +41,7 @@ class Shopaddmodal {
       'productimage': productimage,
       'shopname': shopname,
       'rating': rating,
+      'category': category,
     };
   }
 }

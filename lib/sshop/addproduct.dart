@@ -1,6 +1,9 @@
+import 'package:bekart/shop.dart';
 import 'package:bekart/sshop/addpage.dart';
 import 'package:bekart/sshop/edit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Addproduct extends StatefulWidget {
   const Addproduct({super.key});
@@ -10,141 +13,258 @@ class Addproduct extends StatefulWidget {
 }
 
 class _AddproductState extends State<Addproduct> {
-  List<Map<String, dynamic>> shopproducts = [
-    {
-      "name": "Cookies",
-      "img": 'assets/cookie.jpeg',
-      "price": "200",
-      "details": "Cookie with choclate",
-    },
-    {
-      "name": "donet",
-      "img": 'assets/donetrose.jpeg',
-      "price": "200",
-      "details": "Cookie with choclate",
-    }
-  ];
+  CollectionReference _collectionReferenceShoppingList =
+      FirebaseFirestore.instance.collection('products');
+  late Stream<QuerySnapshot> _streamProductListItems;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'add product',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 1.2,
-            child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 250,
-                    width: 250,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white),
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          shopproducts[index]['img']),
-                                      fit: BoxFit.cover)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        shopproducts[index]['name'],
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      Text(shopproducts[index]['price']),
-                      Text(shopproducts[index]['details']),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 30,
-                            width: 100,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Edit(),
-                                  ));
-                                },
-                                child: Text('edit'),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.black,
-                                  ),
-                                  foregroundColor:
-                                      WidgetStatePropertyAll(Colors.white),
-                                )),
-                          ),
-                          SizedBox(
-                            width: 100,
-                          ),
-                          Container(
-                            height: 30,
-                            width: 100,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //   builder: (context) => Addtocart(),
-                                  // ));
-                                },
-                                child: Text('delete'),
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                    Colors.black,
-                                  ),
-                                  foregroundColor:
-                                      WidgetStatePropertyAll(Colors.white),
-                                )),
-                          ),
-                        ],
-                      )
-                    ]),
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(
-                      height: 10,
-                    ),
-                itemCount: shopproducts.length),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 30,
-            width: 120,
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Addpage(),
-                  ));
-                },
-                child: Text('add new'),
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Color.fromARGB(255, 191, 31, 31),
-                  ),
-                  foregroundColor: WidgetStatePropertyAll(Colors.white),
-                )),
-          ),
+  void initState() {
+    super.initState();
+    _streamProductListItems = _collectionReferenceShoppingList.snapshots();
+  }
+
+  void _deleteItem(String docId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Delete Item"),
+        content: Text("Are you sure you want to delete this item?"),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel')),
+          TextButton(
+              onPressed: () {
+                _collectionReferenceShoppingList
+                    .doc(docId)
+                    .delete()
+                    .then((value) => Navigator.of(context).pop())
+                    .catchError((error) => print("Failed to delete: $error"));
+              },
+              child: Text("Delete"))
         ],
       ),
     );
+  }
+
+  void _updateItem(String docId, Map<String, dynamic> currentData) {
+    // Controllers for input fields
+    TextEditingController nameController =
+        TextEditingController(text: currentData['productname']);
+    TextEditingController priceController =
+        TextEditingController(text: currentData['price']);
+    TextEditingController imageController =
+        TextEditingController(text: currentData['productimage']);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Update Item"),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: 'Name Product'),
+              ),
+              TextField(
+                controller: priceController,
+                decoration: InputDecoration(labelText: 'priceProduct'),
+              ),
+              TextField(
+                controller: imageController,
+                decoration: InputDecoration(labelText: 'Image URL'),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel')),
+          TextButton(
+              onPressed: () {
+                // Update the item in Firebase
+                _collectionReferenceShoppingList.doc(docId).update({
+                  'productname': nameController.text,
+                  'price': priceController.text,
+                  'productimage': imageController.text,
+                }).then((value) {
+                  print('Item updated successfully');
+                  Navigator.of(context).pop();
+                }).catchError((error) => print("Failed to update: $error"));
+              },
+              child: Text("Update")),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 191, 154, 94),
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Products',
+              style: const TextStyle(
+                fontSize: 20,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+          ),
+          title: const Text('Order your favourite sweets...'),
+          backgroundColor: const Color.fromARGB(255, 191, 154, 94),
+        ),
+        body: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Addpage(),
+                ));
+              },
+              child: Text('Add Product'),
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _streamProductListItems,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+                if (snapshot.connectionState == ConnectionState.active) {
+                  QuerySnapshot querySnapshot = snapshot.data;
+                  List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+
+                  // Mapping Firestore documents to Map<String, dynamic>
+                  List<Map<String, dynamic>> items = documents
+                      .map((doc) => {
+                            'id': doc.id,
+                            'shopname': doc['shopname'] ?? 'Name not available',
+                            'productname':
+                                doc['productname'] ?? 'Product not available',
+                            'productimage': doc['productimage'] ?? '',
+                            'rating': doc['rating']?.toString() ??
+                                'Rating not available',
+                            'quantity': doc['quantity']?.toString() ??
+                                'quantity not available',
+                            'price': doc['price']?.toString() ??
+                                'price not available',
+                          })
+                      .toList();
+
+                  return ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      Map<String, dynamic> thisItem = items[index];
+                      return Container(
+                        margin: const EdgeInsets.all(10),
+                        height: 280,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              thisItem['productimage'] != ''
+                                  ? Image.network(
+                                      thisItem['productimage'],
+                                      height: 100,
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Icon(Icons.broken_image,
+                                            size: 100);
+                                      },
+                                    )
+                                  : const Icon(Icons.broken_image, size: 100),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Text(
+                                    thisItem['shopname'],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    thisItem['rating'],
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Icon(Icons.star, color: Colors.amber),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Center(
+                                child: Text(
+                                  thisItem['productname'],
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                thisItem['price'],
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                thisItem['quantity'],
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.edit, color: Colors.blue),
+                                    onPressed: () {
+                                      print(
+                                          "Edit button clicked for: ${thisItem['productname']}");
+                                      _updateItem(thisItem['id'], thisItem);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () =>
+                                        _deleteItem(thisItem['id']),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ]));
   }
 }
