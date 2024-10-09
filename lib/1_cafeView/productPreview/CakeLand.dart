@@ -7,9 +7,9 @@ import '../../model/shopaddmodal.dart';
 import '../cartProviderModel/podctPeviewsingProvider.dart';
 
 class cakeLandView extends StatefulWidget {
-  const cakeLandView({super.key,});
-
-
+  const cakeLandView({
+    super.key,
+  });
 
   @override
   State<cakeLandView> createState() => _cakeLandViewState();
@@ -91,10 +91,11 @@ class _cakeLandViewState extends State<cakeLandView> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProductPreviewProvider(
-                                          detailedProduct: thisItem)));
+                                      builder: (context) =>
+                                          ProductPreviewProvider(
+                                              detailedProduct: thisItem)));
                             },
-                            child: Text("BUY NOW"))
+                            child: Text("Details"))
                       ],
                     ));
               },

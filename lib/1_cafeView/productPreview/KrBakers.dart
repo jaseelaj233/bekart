@@ -8,9 +8,9 @@ import '../cartProviderModel/podctPeviewsingProvider.dart';
 
 class kRBakersview extends StatefulWidget {
   // viewplanetcafe({super.key, required this.resName});
-  const kRBakersview({super.key,});
-
-
+  const kRBakersview({
+    super.key,
+  });
 
   @override
   State<kRBakersview> createState() => _kRBakersviewState();
@@ -24,7 +24,7 @@ class _kRBakersviewState extends State<kRBakersview> {
     super.initState();
     _streamPaperItems = FirebaseFirestore.instance
         .collection('products')
-        .where('category', isEqualTo: 'cakeland')
+        .where('category', isEqualTo: 'kr backery')
         .snapshots();
   }
 
@@ -44,7 +44,7 @@ class _kRBakersviewState extends State<kRBakersview> {
           if (snapshot.connectionState == ConnectionState.active) {
             List<Shopaddmodal> items = snapshot.data!.docs
                 .map((doc) =>
-                Shopaddmodal.fromJson(doc.data() as Map<String, dynamic>))
+                    Shopaddmodal.fromJson(doc.data() as Map<String, dynamic>))
                 .toList();
 
             return GridView.builder(
@@ -66,15 +66,15 @@ class _kRBakersviewState extends State<kRBakersview> {
                       children: [
                         thisItem.productimage.isNotEmpty
                             ? Image.network(thisItem.productimage,
-                            width:
-                            double.infinity, // Adjust width as needed
-                            height: 120, // Adjust height as needed
-                            fit: BoxFit.cover, errorBuilder:
-                                (BuildContext context, Object exception,
-                                StackTrace? stackTrace) {
-                              return Icon(Icons.broken_image, size: 50);
-                            } // Fallback in case of error
-                        )
+                                width:
+                                    double.infinity, // Adjust width as needed
+                                height: 120, // Adjust height as needed
+                                fit: BoxFit.cover, errorBuilder:
+                                    (BuildContext context, Object exception,
+                                        StackTrace? stackTrace) {
+                                return Icon(Icons.broken_image, size: 50);
+                              } // Fallback in case of error
+                                )
                             : const Icon(Icons.broken_image, size: 60),
                         // Adjust icon size as needed
                         const SizedBox(
@@ -92,10 +92,11 @@ class _kRBakersviewState extends State<kRBakersview> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProductPreviewProvider(
-                                          detailedProduct: thisItem)));
+                                      builder: (context) =>
+                                          ProductPreviewProvider(
+                                              detailedProduct: thisItem)));
                             },
-                            child: Text("BUY NOW"))
+                            child: Text("Details"))
                       ],
                     ));
               },
@@ -104,7 +105,7 @@ class _kRBakersviewState extends State<kRBakersview> {
                 mainAxisSpacing: 10, // Space between rows
                 crossAxisSpacing: 10, // Space between columns
                 childAspectRatio:
-                0.6, // Aspect ratio of each grid item or height adjust
+                    0.6, // Aspect ratio of each grid item or height adjust
               ),
             );
           }

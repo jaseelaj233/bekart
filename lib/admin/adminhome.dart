@@ -5,6 +5,10 @@ import 'package:bekart/admin/viewshopproducts.dart';
 import 'package:bekart/admin/viewshopratings.dart';
 import 'package:bekart/admin/viewshopregister.dart';
 import 'package:bekart/customs/adminhomebutton.dart';
+import 'package:bekart/login.dart';
+import 'package:bekart/sshop/addevents.dart';
+import 'package:bekart/sshop/addproduct.dart';
+import 'package:bekart/sshop/eventspage.dart';
 import 'package:flutter/material.dart';
 
 class Adminhome extends StatefulWidget {
@@ -16,20 +20,12 @@ class Adminhome extends StatefulWidget {
 
 class _AdminhomeState extends State<Adminhome> {
   List<String> buttons = [
-    'view registered shops',
-    'view shop products',
-    'view delivery boys',
-    'view events',
-    'view shop rating',
-    'view app rating'
+    'Add product',
+    'Add events',
   ];
   List<Widget> routes = [
-    Viewshopregister(),
-    Viewshopproducts(),
-    Viewdeliveryboys(),
-    Viewevents(),
-    Viewshopratings(),
-    Viewapprating()
+    Addproduct(),
+    Addevents(),
   ];
   @override
   Widget build(BuildContext context) {

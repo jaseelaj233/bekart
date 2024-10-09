@@ -1,3 +1,5 @@
+import 'package:bekart/model/usermodel%20copy.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Yourprofile extends StatefulWidget {
@@ -8,131 +10,123 @@ class Yourprofile extends StatefulWidget {
 }
 
 class _YourprofileState extends State<Yourprofile> {
+  TextEditingController profilenamecontroler = TextEditingController();
+  TextEditingController addresscontroler = TextEditingController();
+
+  TextEditingController phonecontroller = TextEditingController();
+
+  final formkey = GlobalKey<FormState>();
+  final CollectionReference profilecollection =
+      FirebaseFirestore.instance.collection('profile');
+
+  String generateUniqueprofileid() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
+
+  Future<void> addEventsfirebase() async {
+    String uniqueid = generateUniqueprofileid();
+    profileModel profilemodal1 = profileModel(
+      name: profilenamecontroler.text,
+      address: addresscontroler.text,
+      phone: int.parse(phonecontroller.text),
+    );
+    try {
+      await profilecollection.doc(uniqueid).set(profilemodal1.toJson());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('profile added successfully')));
+      profilenamecontroler.clear();
+      addresscontroler.clear();
+
+      phonecontroller.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('profile adding failed: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 191, 154, 94),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'edit profile',
-                style: TextStyle(fontSize: 20),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.black,
-                    child: Text(
-                      'J',
-                      style: TextStyle(color: Colors.white),
+        appBar: AppBar(
+          title: Text('Add Events'),
+        ),
+        body: SingleChildScrollView(
+            child: Form(
+                key: formkey,
+                child: Column(children: [
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "name is required";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: profilenamecontroler,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: ' Name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Jaseela',
-                    style: TextStyle(fontSize: 20),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "address name is required";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: addresscontroler,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'address',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                   ),
-                  Icon(Icons.edit)
-                ],
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              SizedBox(height: 30.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                  SizedBox(height: 30.0),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "phone is is required";
+                      } else {
+                        return null;
+                      }
+                    },
+                    controller: phonecontroller,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'phone',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: 30.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Mobile number',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Address',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-              SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                  SizedBox(height: 100),
                   Container(
                     height: 50,
                     width: 150,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('edit'),
+                    child: TextButton(
+                        onPressed: addEventsfirebase,
+                        child: Text('Submit'),
                         style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            Colors.black,
-                          ),
-                          foregroundColor: WidgetStatePropertyAll(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.white),
                         )),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                ]))));
   }
 }

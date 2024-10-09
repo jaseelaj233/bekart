@@ -8,9 +8,9 @@ import '../cartProviderModel/podctPeviewsingProvider.dart';
 
 class nikkaBakers extends StatefulWidget {
   // viewplanetcafe({super.key, required this.resName});
-  const nikkaBakers({super.key,});
-
-
+  const nikkaBakers({
+    super.key,
+  });
 
   @override
   State<nikkaBakers> createState() => _nikkaBakersState();
@@ -44,7 +44,7 @@ class _nikkaBakersState extends State<nikkaBakers> {
           if (snapshot.connectionState == ConnectionState.active) {
             List<Shopaddmodal> items = snapshot.data!.docs
                 .map((doc) =>
-                Shopaddmodal.fromJson(doc.data() as Map<String, dynamic>))
+                    Shopaddmodal.fromJson(doc.data() as Map<String, dynamic>))
                 .toList();
 
             return GridView.builder(
@@ -66,15 +66,15 @@ class _nikkaBakersState extends State<nikkaBakers> {
                       children: [
                         thisItem.productimage.isNotEmpty
                             ? Image.network(thisItem.productimage,
-                            width:
-                            double.infinity, // Adjust width as needed
-                            height: 120, // Adjust height as needed
-                            fit: BoxFit.cover, errorBuilder:
-                                (BuildContext context, Object exception,
-                                StackTrace? stackTrace) {
-                              return Icon(Icons.broken_image, size: 50);
-                            } // Fallback in case of error
-                        )
+                                width:
+                                    double.infinity, // Adjust width as needed
+                                height: 120, // Adjust height as needed
+                                fit: BoxFit.cover, errorBuilder:
+                                    (BuildContext context, Object exception,
+                                        StackTrace? stackTrace) {
+                                return Icon(Icons.broken_image, size: 50);
+                              } // Fallback in case of error
+                                )
                             : const Icon(Icons.broken_image, size: 60),
                         // Adjust icon size as needed
                         const SizedBox(
@@ -92,10 +92,11 @@ class _nikkaBakersState extends State<nikkaBakers> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProductPreviewProvider(
-                                          detailedProduct: thisItem)));
+                                      builder: (context) =>
+                                          ProductPreviewProvider(
+                                              detailedProduct: thisItem)));
                             },
-                            child: Text("BUY NOW"))
+                            child: Text("Details"))
                       ],
                     ));
               },
@@ -104,7 +105,7 @@ class _nikkaBakersState extends State<nikkaBakers> {
                 mainAxisSpacing: 10, // Space between rows
                 crossAxisSpacing: 10, // Space between columns
                 childAspectRatio:
-                0.6, // Aspect ratio of each grid item or height adjust
+                    0.6, // Aspect ratio of each grid item or height adjust
               ),
             );
           }

@@ -49,12 +49,10 @@ class _AddproductState extends State<Addproduct> {
 
   void _updateItem(String docId, Map<String, dynamic> currentData) {
     // Controllers for input fields
-    TextEditingController nameController =
-        TextEditingController(text: currentData['productname']);
+    TextEditingController quantityc =
+        TextEditingController(text: currentData['quantity']);
     TextEditingController priceController =
         TextEditingController(text: currentData['price']);
-    TextEditingController imageController =
-        TextEditingController(text: currentData['productimage']);
 
     showDialog(
       context: context,
@@ -65,16 +63,12 @@ class _AddproductState extends State<Addproduct> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: 'Name Product'),
+                controller: quantityc,
+                decoration: InputDecoration(labelText: 'quantity Product'),
               ),
               TextField(
                 controller: priceController,
                 decoration: InputDecoration(labelText: 'priceProduct'),
-              ),
-              TextField(
-                controller: imageController,
-                decoration: InputDecoration(labelText: 'Image URL'),
               ),
             ],
           ),
@@ -87,9 +81,8 @@ class _AddproductState extends State<Addproduct> {
               onPressed: () {
                 // Update the item in Firebase
                 _collectionReferenceShoppingList.doc(docId).update({
-                  'productname': nameController.text,
+                  'quantity': quantityc.text,
                   'price': priceController.text,
-                  'productimage': imageController.text,
                 }).then((value) {
                   print('Item updated successfully');
                   Navigator.of(context).pop();
@@ -118,7 +111,7 @@ class _AddproductState extends State<Addproduct> {
               ),
             ),
           ),
-          title: const Text('Order your favourite sweets...'),
+          title: const Text('view products'),
           backgroundColor: const Color.fromARGB(255, 191, 154, 94),
         ),
         body: Column(children: [

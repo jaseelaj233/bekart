@@ -1,6 +1,7 @@
 // import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
 import 'dart:developer';
 
+import 'package:bekart/admin/adminlogin.dart';
 import 'package:bekart/home.dart';
 import 'package:bekart/register.dart';
 import 'package:bekart/userhomedetails.dart';
@@ -41,13 +42,36 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.all(50.0),
                 child: ListView(
                   children: [
-                    Text(
-                      'Hello!',
-                      style: TextStyle(
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Hello!',
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Spacer(),
+                        Container(
+                          height: 50,
+                          width: 150,
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Adminlogin(),
+                                ));
+                              },
+                              child: Text('Admin'),
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Colors.black,
+                                ),
+                                foregroundColor:
+                                    WidgetStatePropertyAll(Colors.white),
+                              )),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 10,

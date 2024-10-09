@@ -29,7 +29,7 @@ class _JprofileState extends State<Jprofile> {
         title: Text('PROFILE'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.all(8.0),
         child: Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +48,11 @@ class _JprofileState extends State<Jprofile> {
               child: Text(
             'Jaseela',
             style: TextStyle(fontSize: 20),
-          )),
+          ),
+          
+          
+          
+          ),
           SizedBox(
             height: 50,
           ),
@@ -76,24 +80,6 @@ class _JprofileState extends State<Jprofile> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DataProductFirebase(),
-                    ));
-                  },
-                  icon: Icon(Icons.remove_red_eye)),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Addproduct(),
-                    ));
-                  },
-                  icon: Icon(Icons.upload)),
-            ],
-          )
         ]),
       ),
     );

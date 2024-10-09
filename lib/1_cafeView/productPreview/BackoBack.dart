@@ -8,9 +8,9 @@ import '../cartProviderModel/podctPeviewsingProvider.dart';
 
 class BackBackView extends StatefulWidget {
   // viewplanetcafe({super.key, required this.resName});
-  const BackBackView({super.key,});
-
-
+  const BackBackView({
+    super.key,
+  });
 
   @override
   State<BackBackView> createState() => _BackBackViewState();
@@ -92,10 +92,11 @@ class _BackBackViewState extends State<BackBackView> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ProductPreviewProvider(
-                                          detailedProduct: thisItem)));
+                                      builder: (context) =>
+                                          ProductPreviewProvider(
+                                              detailedProduct: thisItem)));
                             },
-                            child: Text("BUY NOW"))
+                            child: Text("Details"))
                       ],
                     ));
               },

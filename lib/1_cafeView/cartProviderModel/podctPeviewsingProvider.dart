@@ -11,7 +11,7 @@ class ProductPreviewProvider extends StatelessWidget {
 
   const ProductPreviewProvider({
     Key? key,
-    required this. detailedProduct,
+    required this.detailedProduct,
   }) : super(key: key);
 
   @override
@@ -21,24 +21,26 @@ class ProductPreviewProvider extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-        'Bekart',
-        style: const TextStyle(
-          fontSize: 26,
-          fontStyle: FontStyle.italic,
-          fontWeight: FontWeight.bold,
-          color: Colors.red,
+          'Bekart',
+          style: const TextStyle(
+            fontSize: 26,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
         ),
-      ),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreenProvider()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CartScreenProvider()));
             },
             icon: Icon(Icons.shopping_bag_outlined),
           ),
         ],
       ),
-
       body: Column(
         children: [
           Container(
@@ -47,9 +49,9 @@ class ProductPreviewProvider extends StatelessWidget {
             height: 300,
             child: detailedProduct.productimage.isNotEmpty
                 ? Image.network(
-              detailedProduct.productimage,
-              fit: BoxFit.cover,
-            )
+                    detailedProduct.productimage,
+                    fit: BoxFit.cover,
+                  )
                 : const Icon(Icons.broken_image, size: 100),
           ),
           const SizedBox(height: 16),
@@ -76,7 +78,8 @@ class ProductPreviewProvider extends StatelessWidget {
                   // Show a SnackBar message when product is added
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('${detailedProduct.productname} added to cart'),
+                      content:
+                          Text('${detailedProduct.productname} added to cart'),
                       duration: const Duration(seconds: 2),
                     ),
                   );
@@ -85,6 +88,9 @@ class ProductPreviewProvider extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CartScreenProvider(),
+                  ));
                   // Handle Buy Now action
                 },
                 child: const Text("Buy Now"),

@@ -89,25 +89,45 @@ class _homepage2State extends State<homepage2> {
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
-            ),Icon(Icons.shopping_cart_outlined,color: Colors.white,)
+            ),
+            Icon(
+              Icons.shopping_cart_outlined,
+              color: Colors.white,
+            )
           ],
         ),
-        actions: [const Text('Order your favourite sweets.',style: TextStyle(fontSize: 16),),],
+        actions: [
+          const Text(
+            'Order your favourite sweets.',
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
         backgroundColor: const Color.fromARGB(255, 191, 154, 94),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
-              _shpecard("Planet Cafe", "assets/cookie.jpeg", viewplanetcafe()),
               _shpecard(
-                  "Nila Bakers", "assets/cookie.jpeg", nikkaBakers()),
+                  "Planet Cafe",
+                  "assets/WhatsApp Image 2024-10-01 at 10.15.57 PM.jpeg",
+                  viewplanetcafe()),
               _shpecard(
-                  "KR Bakers", "assets/cookie.jpeg", kRBakersview()),
+                  "Nila Bakers",
+                  "assets/WhatsApp Image 2024-10-01 at 10.15.04 PM.jpeg",
+                  nikkaBakers()),
               _shpecard(
-                  "Cake Land", "assets/cookie.jpeg", cakeLandView()),
+                  "KR Bakers",
+                  "assets/WhatsApp Image 2024-10-01 at 10.15.16 PM.jpeg",
+                  kRBakersview()),
               _shpecard(
-                  "Back 0 Back ", "assets/cookie.jpeg", BackBackView()),
+                  "Cake Land",
+                  "assets/WhatsApp Image 2024-10-01 at 10.15.45 PM.jpeg",
+                  cakeLandView()),
+              _shpecard(
+                  "Back 0 Back ",
+                  "assets/WhatsApp Image 2024-10-01 at 10.15.34 PM.jpeg",
+                  BackBackView()),
             ],
           ),
         ),
