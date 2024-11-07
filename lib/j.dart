@@ -1,5 +1,9 @@
+import 'package:bekart/1_cafeView/cartProviderModel/producCartUsingProvider.dart';
+import 'package:bekart/addtocart.dart';
 import 'package:bekart/customs/custombutton.dart';
+import 'package:bekart/events.dart';
 import 'package:bekart/home.dart';
+import 'package:bekart/logout.dart';
 import 'package:bekart/orderss.dart';
 import 'package:bekart/profile.dart';
 import 'package:bekart/sshop/addpage.dart';
@@ -15,12 +19,8 @@ class Jprofile extends StatefulWidget {
 }
 
 class _JprofileState extends State<Jprofile> {
-  List<String> buttons = ['your profile', 'your orders', 'Log out'];
-  List<Widget> routes = [
-    Yourprofile(),
-    Orderss(),
-    Text(''),
-  ];
+  List<String> buttons = ['add to cart', 'events', 'logout'];
+  List<Widget> routes = [CartScreenProvider(), Events(), LogoutPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _JprofileState extends State<Jprofile> {
         title: Text('PROFILE'),
       ),
       body: Padding(
-        padding:  EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,13 +45,10 @@ class _JprofileState extends State<Jprofile> {
             ],
           ),
           Center(
-              child: Text(
-            'Jaseela',
-            style: TextStyle(fontSize: 20),
-          ),
-          
-          
-          
+            child: Text(
+              'Jaseela',
+              style: TextStyle(fontSize: 20),
+            ),
           ),
           SizedBox(
             height: 50,

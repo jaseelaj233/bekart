@@ -24,7 +24,7 @@ class _homepage2State extends State<homepage2> {
       },
       child: Container(
         margin: const EdgeInsets.all(10),
-        height: 200,
+        height: 300,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -36,13 +36,14 @@ class _homepage2State extends State<homepage2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 100,
-                width: double.infinity,
+                height: 200,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.brown[200],
                 child: Image.asset(
                   imagePath,
-                  height: 100,
-                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
                 ),
               ),
               SizedBox(
@@ -109,9 +110,10 @@ class _homepage2State extends State<homepage2> {
           child: Column(
             children: [
               _shpecard(
-                  "Planet Cafe",
-                  "assets/WhatsApp Image 2024-10-01 at 10.15.57 PM.jpeg",
-                  viewplanetcafe()),
+                "Planet Cafe",
+                "assets/WhatsApp Image 2024-10-01 at 10.15.57 PM.jpeg",
+                viewplanetcafe(),
+              ),
               _shpecard(
                   "Nila Bakers",
                   "assets/WhatsApp Image 2024-10-01 at 10.15.04 PM.jpeg",
