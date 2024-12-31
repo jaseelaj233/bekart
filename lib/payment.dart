@@ -1,6 +1,7 @@
 import 'package:bekart/buynow.dart';
 import 'package:bekart/home.dart';
 import 'package:bekart/ooo.dart';
+import 'package:bekart/thanke.dart';
 import 'package:flutter/material.dart';
 
 class Payment extends StatefulWidget {
@@ -121,13 +122,13 @@ class _PaymentState extends State<Payment> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    selectedRole = 'PAYTM';
+                    selectedRole = 'RAZOR PAY';
                   });
                 },
                 child: Column(
                   children: [
                     const Text(
-                      'PAYTM',
+                      'RAZOR PAY',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -142,7 +143,7 @@ class _PaymentState extends State<Payment> {
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
-                          color: selectedRole == 'PAYTM'
+                          color: selectedRole == 'RAZOR PAY'
                               ? Colors.blue
                               : Colors.transparent,
                           width: 3,
@@ -164,7 +165,7 @@ class _PaymentState extends State<Payment> {
                       ? () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Home(),
+                              builder: (context) => ThankYouPage(),
                             ),
                           );
                         }

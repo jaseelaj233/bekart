@@ -19,7 +19,7 @@ class _CartScreenProviderState extends State<CartScreenProvider> {
         title: const Text('My Cart'),
         automaticallyImplyLeading: true,
       ),
-      body: cart.CartItems.isEmpty
+      body: cart.cartitems.isEmpty
           ? Center(child: const Text('Your cart is empty'))
           : SingleChildScrollView(
               child: Padding(
@@ -36,7 +36,7 @@ class _CartScreenProviderState extends State<CartScreenProvider> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    ...cart.CartItems.map((item) => CartItem(
+                    ...cart.cartitems.map((item) => CartItem(
                           name: item.productname,
                           description: item.details,
                           price: double.parse(item.price),

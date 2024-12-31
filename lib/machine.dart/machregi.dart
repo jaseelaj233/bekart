@@ -1,21 +1,20 @@
 import 'dart:developer';
 
-import 'package:bekart/home.dart';
-import 'package:bekart/login.dart';
-import 'package:bekart/model/usermodel.dart';
-import 'package:bekart/userhomedetails.dart';
+import 'package:bekart/machine.dart/machbottom.dart';
+import 'package:bekart/machine.dart/machhome.dart';
+import 'package:bekart/machine.dart/machmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class Machregi extends StatefulWidget {
+  const Machregi({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Machregi> createState() => _MachregiState();
 }
 
-class _RegisterState extends State<Register> {
+class _MachregiState extends State<Machregi> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -28,7 +27,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 191, 154, 94),
+      backgroundColor: Color.fromRGBO(0, 0, 0, 1),
       body: Padding(
         padding: const EdgeInsets.all(50.0),
         child: Form(
@@ -39,7 +38,10 @@ class _RegisterState extends State<Register> {
                 Center(
                   child: Text(
                     'Hello!',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        color: Colors.white),
                   ),
                 ),
                 SizedBox(
@@ -48,7 +50,7 @@ class _RegisterState extends State<Register> {
                 Center(
                   child: Text(
                     'REGISTER NOW',
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 30.0),
@@ -168,7 +170,7 @@ class _RegisterState extends State<Register> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               try {
-                                UsersModel user1 = UsersModel(
+                                Machmodel machmodel1 = Machmodel(
                                     name: namecontroller.text,
                                     address: addresscontroller.text,
                                     phone: int.parse(phonecontroller.text),
@@ -181,12 +183,12 @@ class _RegisterState extends State<Register> {
                                     .then((value) {
                                   String id = value.user!.uid;
                                   FirebaseFirestore.instance
-                                      .collection("Users")
+                                      .collection("machinetest")
                                       .doc(id)
-                                      .set(user1.toJson())
+                                      .set(machmodel1.toJson())
                                       .then((onValue) => Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                            builder: (context) => Home(),
+                                            builder: (context) => Machbottom(),
                                           )));
                                 });
                               } on FirebaseAuthException catch (e) {

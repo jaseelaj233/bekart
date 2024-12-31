@@ -19,7 +19,7 @@ class Jprofile extends StatefulWidget {
 }
 
 class _JprofileState extends State<Jprofile> {
-  List<String> buttons = ['add to cart', 'events', 'logout'];
+  List<String> buttons = ['Add to cart', 'Events', 'logout'];
   List<Widget> routes = [CartScreenProvider(), Events(), LogoutPage()];
 
   @override

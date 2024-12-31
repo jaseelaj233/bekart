@@ -1,5 +1,7 @@
 import 'package:bekart/1_cafeView/cartProviderModel/producCartUsingProvider.dart';
 import 'package:bekart/1_cafeView/homepageinal2.dart';
+import 'package:bekart/deliveryaddress.dart';
+
 import 'package:bekart/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +92,7 @@ class ProductPreviewProvider extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Payment(),
+                    builder: (context) => Deliveryaddress(),
                   ));
                   // Handle Buy Now action
                 },

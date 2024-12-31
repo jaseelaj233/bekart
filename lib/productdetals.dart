@@ -1,6 +1,7 @@
 import 'package:bekart/addtocart.dart';
 import 'package:bekart/buynow.dart';
 import 'package:bekart/deliveryaddress.dart';
+import 'package:bekart/home.dart';
 import 'package:bekart/shop.dart';
 import 'package:flutter/material.dart';
 
@@ -54,48 +55,6 @@ class _ProductdetalsState extends State<Productdetals> {
             SizedBox(
               height: 80,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 50,
-                  width: 150,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Buynow(),
-                        ));
-                      },
-                      child: Text('Buy now'),
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Colors.black,
-                        ),
-                        foregroundColor: WidgetStatePropertyAll(Colors.white),
-                      )),
-                ),
-                SizedBox(
-                  width: 100,
-                ),
-                Container(
-                  height: 50,
-                  width: 150,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Addtocart(),
-                        ));
-                      },
-                      child: Text('Addto cart'),
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          Colors.black,
-                        ),
-                        foregroundColor: WidgetStatePropertyAll(Colors.white),
-                      )),
-                ),
-              ],
-            )
           ],
         ),
       ),

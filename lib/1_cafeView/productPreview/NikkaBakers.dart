@@ -24,7 +24,7 @@ class _nikkaBakersState extends State<nikkaBakers> {
     super.initState();
     _streamPaperItems = FirebaseFirestore.instance
         .collection('products')
-        .where('category', isEqualTo: "nila backes")
+        .where('category', isEqualTo: "Nila backes")
         .snapshots();
   }
 

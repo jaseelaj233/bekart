@@ -1,5 +1,8 @@
 import 'package:bekart/firebase_options.dart';
 import 'package:bekart/home.dart';
+import 'package:bekart/machine.dart/machbottom.dart';
+import 'package:bekart/machine.dart/machhome.dart';
+import 'package:bekart/machine.dart/machlogin.dart';
 import 'package:bekart/ob1.dart';
 import 'package:bekart/spalash%20scrren.dart';
 import 'package:firebase_core/firebase_core.dart';
